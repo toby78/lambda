@@ -59,7 +59,7 @@ exports.handler = function(event, context) {
 						cb(err);
 					} else {
 						s3.putObject({
-							"Bucket": image.record.s3.bucket.name.concat("-resized"),
+							"Bucket": image.record.s3.bucket.name.replace("-original", "-resized"),
 							"Key": config + "/" + image.originalKey,
 							"Body": buffer,
 							"ContentType": image.contentType

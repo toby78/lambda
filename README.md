@@ -8,10 +8,10 @@ This repository demonstrates how you can create a bunch of resized images right 
 
 The solution makes use of two S3 buckets:
 
-* The bucket that contains the original images. Users upload images to this bucket. 
+* The bucket that contains the original images. Users upload images to this bucket. This bucket is suffixed with `-original` in the following example.
 * The bucket that contains the resized images. The bucket is suffixed with `-resized` in the following example.
 
-When you upload an image to the original bucket a Lambda function is executed. The Lambda function downloads the image from S3, creates multiple resized versions and uploads them to the `-resized` S3 bucket. As of now three resized copies are created for every upload to original:
+When you upload an image to the `-original` bucket a Lambda function is executed. The Lambda function downloads the image from S3, creates multiple resized versions and uploads them to the `-resized` S3 bucket. As of now three resized copies are created for every upload to `-original`:
 
 * `150x`  fixed width, height is scaled as needed
 * `50x50` scale image best into box
@@ -63,10 +63,10 @@ $ aws cloudformation describe-stacks --stack-name lambda-resize --query Stacks[]
 ]
 ```
 
-You can now upload your first image to the original S3 bucket (you can also use the web based [Management Console](https://console.aws.amazon.com/s3) if you prefer).
+You can now upload your first image to the `-original` S3 bucket (you can also use the web based [Management Console](https://console.aws.amazon.com/s3) if you prefer).
 
 ```
-$ aws s3 cp path/to/image.png s3://$ImageS3Bucket/image.png
+$ aws s3 cp path/to/image.png s3://$ImageS3Bucket-original/image.png
 ```
 
 You will see the resized images in the `-resized` bucket (you can also use the web based Management Console if you prefer).
@@ -84,16 +84,16 @@ As you can see, for every size configuration a new "directory" was created.
 
 ## What's next?
 
-From this point you can think about how to enable your users to upload files into the original S3 bucket if your use cases requires user generated content. To allow uploads from your users you should think about a way to protect your original bucket with IAM permissions. You could use the [Security Token Service](http://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html) to achieve this.
+From this point you can think about how to enable your users to upload files into the `-original` S3 bucket if your use cases requires user generated content. To allow uploads from your users you should think about a way to protect your `-original` bucket with IAM permissions. You could use the [Security Token Service](http://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html) to achieve this.
 
 You should use CloudFront in combination with the `-resized` bucket to serve the resized images to your end users. This will decrease the latency by pushing your content to one of the edge locations of the CloudFront CDN network.
 
 ## Teardown
 
-Remove all files in the original and `-resized` bucket.
+Remove all files in the `-original` and `-resized` bucket.
 
 ```
-$ aws s3 rm --recursive s3://$ImageS3Bucket
+$ aws s3 rm --recursive s3://$ImageS3Bucket-original
 $ aws s3 rm --recursive s3://$ImageS3Bucket-resized
 ```
 
