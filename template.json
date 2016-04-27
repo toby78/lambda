@@ -20,7 +20,7 @@
     "OriginalS3Bucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {
-        "BucketName": {"Fn::Join": ["-", [{"Ref": "ImageS3Bucket"}, "original"]]},
+        "BucketName": {"Fn::Join": ["", [{"Ref": "ImageS3Bucket"}, ""]]},
         "NotificationConfiguration": {
           "LambdaConfigurations": [{
             "Event": "s3:ObjectCreated:*",
@@ -68,7 +68,7 @@
             "Statement": [{
               "Effect": "Allow",
               "Action": ["s3:GetObject"],
-              "Resource": [{"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "ImageS3Bucket"}, "-original/*"]]}]
+              "Resource": [{"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "ImageS3Bucket"}, "/*"]]}]
             }]
           }
         }, {
@@ -105,7 +105,7 @@
         "Action": "lambda:invokeFunction",
         "FunctionName": {"Fn::GetAtt": ["Lambda", "Arn"]},
         "Principal": "s3.amazonaws.com",
-        "SourceArn": {"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "ImageS3Bucket"}, "-original"]]}
+        "SourceArn": {"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "ImageS3Bucket"}, ""]]}
       }
     }
   }
