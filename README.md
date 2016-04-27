@@ -1,5 +1,7 @@
 # AWS in Action: Lambda
 
+**N.B. Updated from the original to allow an original buckename without a '-original' prefix**
+
 This repository demonstrates how you can create a bunch of resized images right after uploading an image to S3. The solution requires no servers, is scalable and can be automatically deployed within minutes. The following figure demonstrate the image resizing process.
 
 ![Image resizing process](./lambda_resize.png?raw=true "Image resizing process")
