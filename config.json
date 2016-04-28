@@ -1,4 +1,4 @@
 {
-	"concurrency": 5,
+	"concurrency": 6,
 	"sizes": ["400x400", "800x800", "80x80", "x800", "800x"]
 }
