@@ -66,6 +66,16 @@ exports.handler = function(event, context) {
 						}, function(err) {
 							cb(err);
 						});
+                        //delete original here?
+                        //var params = {  Bucket: image.record.s3.bucket.name, Key: image.originalKey };
+                        //s3.deleteObject(params, function(err, data) {
+                            //if (err) {
+                                //console.log(err, err.stack);  // error
+                            //} else {
+                                //console.log(data);                 // deleted
+                            //}
+                        //});
+
 					}
 				});
 			}, function(err) {
