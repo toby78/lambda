@@ -62,7 +62,8 @@ exports.handler = function(event, context) {
 							"Bucket": image.record.s3.bucket.name.replace("-uploads", "-files"),
 							"Key": config + "/" + image.originalKey,
 							"Body": buffer,
-							"ContentType": image.contentType
+							"ContentType": image.contentType,
+                            "ACL": 'public-read'
 						}, function(err) {
 							cb(err);
 						});
